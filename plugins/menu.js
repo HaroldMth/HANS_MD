@@ -1,13 +1,7 @@
+const { stdTimeFunctions } = require('pino');
 const { cmd, commands } = require('../command');
 const config = require('../config');
-
-function getUptime() {
-    let totalSeconds = process.uptime();
-    let hours = Math.floor(totalSeconds / 3600);
-    let minutes = Math.floor((totalSeconds % 3600) / 60);
-    let seconds = Math.floor(totalSeconds % 60);
-    return `${hours}h ${minutes}m ${seconds}s`;
-}
+const functions = require('../lib/functions');
 
 function getCurrentDate() {
     let date = new Date();
@@ -25,11 +19,24 @@ function getCurrentTime() {
     return `${hours}:${minutes}:${seconds}`;
 }
 
+// Function to get current uptime dynamically
+function getUptime() {
+    let totalSeconds = process.uptime();
+    let hours = Math.floor(totalSeconds / 3600);
+    let minutes = Math.floor((totalSeconds % 3600) / 60);
+    let seconds = Math.floor(totalSeconds % 60);
+    return `${hours}h ${minutes}m ${seconds}s`;
+}
+
+
 const uptime = getUptime();
 const currentDate = getCurrentDate();
 const currentTime = getCurrentTime();
 
-module.exports = { getUptime, uptime, getCurrentDate, currentDate, getCurrentTime, currentTime };
+module.exports = { getUptime, getCurrentDate, getCurrentTime };
+
+module.exports = { getCurrentDate, currentDate, getCurrentTime, currentTime };
+
 
 cmd({
     pattern: "menu",
@@ -44,9 +51,9 @@ cmd({
 ║ 🚀 𝓗𝓐𝓝𝓢 𝓑𝓨𝓣𝓔 𝓜𝓓 🚀           
 ╠══════════════════╣
 ║ 𝓗𝓮𝓵𝓵𝓸, 𝓭𝓮𝓪𝓻 *${pushname}* 🎩
-║ 📅 𝓓𝓪𝓽𝓮: *${currentDate}*
-║ ⏰ 𝓣𝓲𝓶𝓮: *${currentTime}*
-║ ⏳ 𝓤𝓹𝓽𝓲𝓶𝓮: *${uptime}*
+║ 📅 𝓓𝓪𝓽𝓮: *${getCurrentDate()}*
+║ ⏰ 𝓣𝓲𝓶𝓮: *${getCurrentTime()}*
+║ ⏳ 𝓤𝓹𝓽𝓲𝓶𝓮: *${getUptime()}*
 ║ 👑 𝓞𝔀𝓷𝓮𝓻: *${config.OWNER_NAME}*
 ║ 💻 𝓜𝓸𝓭𝓮: *${config.MODE}*
 ╚══════════════════╝
@@ -145,11 +152,13 @@ cmd({
 ┃ 🤬 .insult 
 ┃ 😂 .meme
 ┃ 🔗 .url
+┃ 🎵 .ringtone <query>
 ╰────────────────
 
 🕵️ *『 𝓢𝓣𝓐𝓛𝓚 𝓜𝓔𝓝𝓤 』* 🕵️
 ╭──⟪🔍⟫──────────
 ┃ 🔎 .ghstalk <username>
+┃ 🔍 .wastalk <link>
 ╰────────────────
 
 📖 *『 𝓡𝓔𝓛𝓘𝓖𝓘𝓞𝓝 𝓜𝓔𝓝𝓤 』* 📖

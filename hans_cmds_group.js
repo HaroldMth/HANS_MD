@@ -126,3 +126,4 @@ async (conn, mek, m, { from, reply }) => {
     }
 });
 
+// if you want use the codes give me credit on your channel and repo in this file and my all files 
